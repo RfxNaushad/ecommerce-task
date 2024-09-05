@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import { CartContext } from "../context/CartContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
-import Logo from '../image/ficon.png'
+import Logo from '../logo.png'
 
 
 const Header = () => {
