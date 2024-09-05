@@ -1,30 +1,33 @@
+// AuthContext.js
 import React, { createContext, useState, useEffect } from 'react';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // Loading while checking storage
 
-  // Check localStorage for user session on component mount
   useEffect(() => {
-    const savedUser = JSON.parse(localStorage.getItem('user'));
+    const savedUser = localStorage.getItem('user');
     if (savedUser) {
-      setUser(savedUser);
+      setUser(JSON.parse(savedUser)); // Restore user from localStorage
     }
+    setLoading(false); // Finished loading
   }, []);
 
-  const login = (userData) => {
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData)); // Save user session in localStorage
+  const login = (credentials) => {
+    const fakeUser = { username: credentials.username };
+    setUser(fakeUser);
+    localStorage.setItem('user', JSON.stringify(fakeUser)); // Save user to localStorage
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('user');
+    localStorage.removeItem('user'); // Clear localStorage
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
