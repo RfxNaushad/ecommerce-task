@@ -1,0 +1,58 @@
+[
+    {
+      "id": 1,
+      "title": "Recliner Chair Wood",
+      "price": "€299.00",
+      "old_price": "€350.00",
+      "offer": "30",
+      "image": "/image/chair.png",
+      "description": "It has a backrest that can be tilted back, and often a footrest extended"
+    },
+    {
+        "id": 2,
+      "title": "Timber Ride Padded",
+      "price": "€59.00",
+      "old_price": "€75.00",
+      "offer": "30%",
+      "image": "/image/chair1.png",
+      "description": "High Back Rocking Side Pocket Portable Folding Outdoor Camping Chairs"
+    },
+    {
+        "id": 3,
+      "title": "Timber Ride Padded",
+      "price": "€59.00",
+      "old_price": "€75.00",
+      "offer": "30",
+      "image": "/image/chair2.png",
+      "description": "High Back Rocking Side Pocket Portable Folding Outdoor Camping Chairs"
+    },
+    {
+        "id": 4,
+      "title": "Timber Ride Padded",
+      "price": "€59.00",
+      "old_price": "€75.00",
+      "offer": "30",
+      "image": "/image/chair3.png",
+      "description": "High Back Rocking Side Pocket Portable Folding Outdoor Camping Chairs"
+    },
+    {
+        "id": 5,
+      "title": "Timber Ride Padded",
+      "price": "€59.00",
+      "old_price": "€75.00",
+      "offer": "30",
+      "image": "/image/chair4.png",
+      "description": "High Back Rocking Side Pocket Portable Folding Outdoor Camping Chairs"
+    },
+    {
+      "id": 5,
+      "title": "Timber Ride Padded",
+      "price": "€59.00",
+      "old_price": "€75.00",
+      "offer": "30",
+      "image": "/image/chair5.png",
+      "description": "High Back Rocking Side Pocket Portable Folding Outdoor Camping Chairs"
+    }
+    
+  ]
+  
