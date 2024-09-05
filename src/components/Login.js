@@ -1,82 +1,154 @@
-// import { useContext, useState } from 'react';
-// import { AuthContext } from '../context/AuthContext';
 
-// const Login = () => {
-//   const { login } = useContext(AuthContext);
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     // Dummy user for demonstration purposes
-//     const userData = { email, password };
-//     login(userData);
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <input
-//         type="email"
-//         value={email}
-//         onChange={(e) => setEmail(e.target.value)}
-//         placeholder="Email"
-//       />
-//       <input
-//         type="password"
-//         value={password}
-//         onChange={(e) => setPassword(e.target.value)}
-//         placeholder="Password"
-//       />
-//       <button type="submit">Login</button>
-//     </form>
-//   );
-// };
-
-// export default Login;
-
-import React, { useContext, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+// src/components/Login.js
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { auth, googleProvider, appleProvider } from '../firebase/Firebase';
+import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
-  const [credentials, setCredentials] = useState({ username: '' });
-  const { login, user } = useContext(AuthContext);
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const from = location.state?.from?.pathname || '/store'; // Redirect to the page the user was trying to access or default to /store
-
-  const handleSubmit = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    login(credentials);
-    navigate(from, { replace: true }); // Redirect after login
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      login(userCredential.user);
+      navigate('/store');
+    } catch (error) {
+      setError('Invalid email or password!');
+    }
   };
 
-  if (user) {
-    return navigate(from, { replace: true }); // If already logged in, redirect
-  }
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      login(result.user);
+      navigate('/store');
+    } catch (error) {
+      setError('Google sign-in failed.');
+    }
+  };
+
+  const handleAppleSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, appleProvider);
+      login(result.user);
+      navigate('/store');
+    } catch (error) {
+      setError('Apple sign-in failed.');
+    }
+  };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={credentials.username}
-        onChange={(e) => setCredentials({ username: e.target.value })}
-        placeholder="Username"
-        required
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-        required
-      />
-      <button type="submit">Login</button>
-    </form>
+
+    <div className="login-container flex h-screen">
+  <div className="login-form flex-1 flex justify-center items-center bg-gray-100">
+    <div className="w-80">
+      <h2 className="text-2xl font-bold mb-2">Welcome Back!</h2>
+      <p className="mb-6">Enter your credentials to access your account</p>
+      {error && <p className="text-red-500 mb-4">{error}</p>}
+      <form onSubmit={handleLogin}>
+        <div className="mb-4">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
+            className="w-full px-4 py-2 border rounded-md"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter your password"
+            className="w-full px-4 py-2 border rounded-md"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <Link to="/forgot-password" className="text-blue-500">Forgot Password?</Link>
+        </div>
+        <div className="mb-4 flex items-center">
+          <input type="checkbox" id="terms" className="mr-2" required />
+          <label htmlFor="terms">I agree to the <Link to="/terms" className="text-blue-500">Terms & Policy</Link></label>
+        </div>
+        <button
+          type="submit"
+          className="w-full py-2 bg-black text-white rounded-md"
+        >
+          Sign In
+        </button>
+      </form>
+      <div className="mt-6 text-center">or</div>
+      <div className="mt-4 flex justify-between">
+        <button
+          onClick={handleGoogleSignIn}
+          className="w-1/2 py-2 border rounded-md mr-2"
+        >
+          Sign in with Google
+        </button>
+        <button
+          onClick={handleAppleSignIn}
+          className="w-1/2 py-2 border rounded-md"
+        >
+          Sign in with Apple
+        </button>
+      </div>
+      <div className="mt-6 text-center">
+        <p>Don't have an account? <Link to="/signup" className="text-blue-500">Sign up</Link></p>
+      </div>
+    </div>
+  </div>
+  <div
+    className="login-image flex-1 bg-cover bg-center flex justify-center items-center"
+    style={{ backgroundImage: "url('/image/login-page.png')" }} // Replace with the actual image path
+  >
+    <div className="text-center text-white bg-black bg-opacity-50 p-8 rounded-md">
+      <h1 className="text-4xl font-bold mb-4">FurniFlex</h1>
+      <p>Discover a seamless shopping experience with our curated collection of products. From fashion to electronics, we bring quality.</p>
+    </div>
+  </div>
+</div>
+
 
   );
 };
 
 export default Login;
+
+
+{/* <div>
+      <h2>Login</h2>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <form onSubmit={handleLogin}>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          required
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          required
+        />
+        <button type="submit">Login</button>
+      </form>
+
+      <button onClick={handleGoogleSignIn}>Sign in with Google</button>
+      <button onClick={handleAppleSignIn}>Sign in with Apple</button>
+
+      <p>Don't have an account? <Link to="/signup">Sign up here</Link></p>
+    </div> */}

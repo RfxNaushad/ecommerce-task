@@ -76,7 +76,7 @@
 // export default App;
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ProductProvider } from './context/ProductContext';
 import { CartProvider } from './context/CartContext';
@@ -85,6 +85,7 @@ import Login from './components/Login';
 import Store from './components/Store';
 import Cart from './components/Cart';
 import PrivateRoute from './components/PrivateRoute';
+import Signup from './components/SignUp';
 
 function App() {
   return (
@@ -93,7 +94,9 @@ function App() {
         <ProductProvider>
           <CartProvider>
             <Routes>
+            <Route path="/" element={<Signup />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
               {/* Private Routes for Store and Cart */}
               <Route
                 path="/store"
