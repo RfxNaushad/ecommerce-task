@@ -104,15 +104,42 @@ const CartProvider = ({ children }) => {
     });
   };
 
+
   // Function to remove product from cart
   const removeFromCart = (id) => {
     setCart((prevCart) =>
-      prevCart.filter((item) => item.id !== id)
+      prevCart.map((item) =>
+        item.id === id
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      ).filter((item) => item.quantity > 0)
+    );
+  };
+
+  // Function to increase quantity
+  const increaseQuantity = (id) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      )
+    );
+  };
+
+  // Function to decrease quantity
+  const decreaseQuantity = (id) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === id
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      ).filter((item) => item.quantity > 0)
     );
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, totalQuantity, totalPrice }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, totalQuantity, totalPrice }}>
       {children}
     </CartContext.Provider>
   );
