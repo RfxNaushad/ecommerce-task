@@ -124,31 +124,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-{/* <div>
-      <h2>Login</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
-
-      <button onClick={handleGoogleSignIn}>Sign in with Google</button>
-      <button onClick={handleAppleSignIn}>Sign in with Apple</button>
-
-      <p>Don't have an account? <Link to="/signup">Sign up here</Link></p>
-    </div> */}
