@@ -4,12 +4,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { auth, googleProvider, appleProvider } from '../firebase/Firebase';
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { AuthContext } from '../context/AuthContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -72,34 +75,12 @@ const handleSignup = async (e) => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
+  }
+
+
   return (
-    // <div>
-    //   <h2>Sign Up</h2>
-    //   {error && <p style={{ color: 'red' }}>{error}</p>}
-    //   <form onSubmit={handleSignup}>
-    //     <input
-    //       type="email"
-    //       value={email}
-    //       onChange={(e) => setEmail(e.target.value)}
-    //       placeholder="Email"
-    //       required
-    //     />
-    //     <input
-    //       type="password"
-    //       value={password}
-    //       onChange={(e) => setPassword(e.target.value)}
-    //       placeholder="Password"
-    //       required
-    //     />
-    //     <button type="submit">Sign Up</button>
-    //   </form>
-
-    //   <button onClick={handleGoogleSignup}>Sign up with Google</button>
-    //   <button onClick={handleAppleSignup}>Sign up with Apple</button>
-
-    //   <p>Already have an account? <Link to="/login">Log in here</Link></p>
-    // </div>
-
     <div className="signup-container flex h-screen">
       <div className="signup-form flex-1 flex justify-center items-center bg-gray-100">
         <div className="w-80">
@@ -136,15 +117,26 @@ const handleSignup = async (e) => {
                 required
               />
             </div>
-            <div className="mb-4">
+            <div className="mb-4 relative">
               <input
-                type="password"
+                type={showPassword ? "text" : "password" }
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
                 className="w-full px-4 py-2 border rounded-md"
                 required
               />
+              <span
+                onClick={togglePasswordVisibility}
+                style={{
+                  position: "absolute",
+                  cursor: "pointer",
+                  top: "9px",
+                  right: "10px",
+                }}
+              >
+                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+              </span>
             </div>
             <div className="mb-4 flex items-center">
               <input type="checkbox" id="terms" className="mr-2" required />
