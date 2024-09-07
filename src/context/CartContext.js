@@ -11,7 +11,7 @@ const CartProvider = ({ children }) => {
   useEffect(() => {
     const storedCart = localStorage.getItem('cart');
     if (storedCart) {
-      setCart(JSON.parse(storedCart)); // Hydrate the cart from localStorage
+      setCart(JSON.parse(storedCart)); 
     }
   }, []);
 
@@ -20,7 +20,7 @@ const CartProvider = ({ children }) => {
     if (cart.length > 0) {
       localStorage.setItem('cart', JSON.stringify(cart));
     } else {
-      localStorage.removeItem('cart'); // Clean localStorage if the cart is empty
+      localStorage.removeItem('cart'); 
     }
 
     // Calculate total quantity and total price
@@ -39,26 +39,14 @@ const CartProvider = ({ children }) => {
       if (existingProduct) {
         return prevCart.map((item) =>
           item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 } // Increase quantity if product exists
+            ? { ...item, quantity: item.quantity + 1 } 
             : item
         );
       }
 
-      return [...prevCart, { ...product, quantity: 1 }]; // Add new product
+      return [...prevCart, { ...product, quantity: 1 }]; 
     });
   };
-
-
-  // Function to remove product from cart
-//   const removeFromCart = (id) => {
-//     setCart((prevCart) =>
-//       prevCart.map((item) =>
-//         item.id === id
-//           ? { ...item, quantity: item.quantity - 1 }
-//           : item
-//       ).filter((item) => item.quantity > 0)
-//     );
-//   };
 
 const removeFromCart = (id) => {
     setCart((prevCart) =>

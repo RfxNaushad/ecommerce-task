@@ -16,7 +16,7 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <img src={Logo} alt="FurniFlex" className="h-10 w-10" />
-              <span className="font-bold text-xl text-blue-600">FurniFlex</span>
+              <span className="font-bold text-xl text-blue-400"><span className="text-white">Furni</span>Flex</span>
             </div>
           </div>
 

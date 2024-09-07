@@ -1,0 +1,23 @@
+.login-card{
+    background-color: #fafafa;
+    width: 75%;
+}
+.font-color {
+    color: #707070;
+}
+
+.button-border{
+    border: d9d9d9;
+}
+
+.input-label {
+    height: 52px;
+    color: #707070;
+}
+.overline {
+    text-decoration-line: overline;
+  }
+
+.product-sidebar{
+    width: 263px;
+}
