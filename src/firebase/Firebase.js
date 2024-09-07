@@ -1,6 +1,6 @@
 import "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, OAuthProvider } from "firebase/auth";
+import { browserLocalPersistence, getAuth, GoogleAuthProvider, OAuthProvider, setPersistence } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAaApOF7vU3TIA2Ubl5F5asY38is8bIsOM",
@@ -20,6 +20,13 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+setPersistence(auth, browserLocalPersistence)
+  .then(() => {
+    // Existing and future Auth states will now persist
+  })
+  .catch((error) => {
+    console.error("Error setting persistence:", error);
+  });
 const googleProvider = new GoogleAuthProvider();
 const appleProvider = new OAuthProvider("apple.com");
 
