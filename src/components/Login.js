@@ -37,14 +37,8 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      console.log('====================================');
-      console.log(result);
-      console.log('====================================');
       login(result.user);
       navigate("/store");
-      // if (response.success) {
-      //   setCookie('authToken', response.token, { days: 7, sameSite: 'lax', secure: true });
-      // }
     } catch (error) {
       setError("Google sign-in failed.");
     }

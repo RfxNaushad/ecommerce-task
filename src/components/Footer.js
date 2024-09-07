@@ -9,7 +9,6 @@ import linkedin from "../icon/linkedin-02.png";
 
 const Footer = () => {
   return (
-
     <footer className="bg-black text-white pt-20 pb-10">
       <div className="container mx-auto grid grid-cols-5 gap-4 pb-14">
         {/* Logo Column */}

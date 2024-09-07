@@ -27,7 +27,6 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      // Create user with email and password
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -56,23 +55,47 @@ const Signup = () => {
     }
   };
 
+  // const handleGoogleSignup = async () => {
+  //   try {
+  //     const result = await signInWithRedirect(auth, googleProvider);
+  //     console.log("res:", result);
+  //     login(result.user);
+  //     navigate("/store");
+  //   } catch (error) {
+  //     setError("Google sign-up failed.");
+  //   }
+  // };
+
+  // const handleAppleSignup = async () => {
+  //   try {
+  //     const result = await signInWithPopup(auth, appleProvider);
+  //     login(result.user);
+  //     navigate("/store");
+  //   } catch (error) {
+  //     setError("Apple sign-up failed.");
+  //   }
+  // };
+
   const handleGoogleSignup = async () => {
     try {
-      const result = await signInWithRedirect(auth, googleProvider);
-      console.log("res:", result);
+      const result = await signInWithPopup(auth, googleProvider);
+      console.log("Google Sign-in Result:", result);
       login(result.user);
       navigate("/store");
     } catch (error) {
+      console.error("Google Sign-in Error:", error); // More detailed error logging
       setError("Google sign-up failed.");
     }
   };
-
+  
   const handleAppleSignup = async () => {
     try {
       const result = await signInWithPopup(auth, appleProvider);
+      console.log("Apple Sign-in Result:", result);
       login(result.user);
       navigate("/store");
     } catch (error) {
+      console.error("Apple Sign-in Error:", error); // More detailed error logging
       setError("Apple sign-up failed.");
     }
   };
@@ -195,14 +218,14 @@ const Signup = () => {
               className="button-border w-1/2 py-4 border gap-2.5 rounded-md text-xs font-medium mr-2 flex items-center justify-center"
             >
               <img src={google} alt="google" className="h-6 w-6" />
-              Sign in with Google
+              Sign up with Google
             </button>
             <button
               onClick={handleAppleSignup}
               className="button-border w-1/2 py-4 border gap-2.5 rounded-md text-xs font-medium flex items-center justify-center"
             >
               <img src={apple} alt="apple" className="h-6 w-6" />
-              Sign in with Apple
+              Sign up with Apple
             </button>
           </div>
           <div className="mt-6 text-center">
