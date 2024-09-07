@@ -1,48 +1,55 @@
-// src/components/Signup.js
-import React, { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { auth, googleProvider, appleProvider } from '../firebase/Firebase';
-import { createUserWithEmailAndPassword, signInWithPopup,signInWithRedirect } from 'firebase/auth';
-import { AuthContext } from '../context/AuthContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { auth, googleProvider, appleProvider } from "../firebase/Firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  signInWithRedirect,
+} from "firebase/auth";
+import { AuthContext } from "../context/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import google from "../icon/google.png";
 import apple from "../icon/apple.png";
 import Logo from "../logo.png";
 import "../App.css";
 
 const Signup = () => {
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-
-const handleSignup = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     try {
       // Create user with email and password
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       login(userCredential.user);
-      navigate('/store');
+      navigate("/store");
     } catch (error) {
-      let errorMessage = 'Failed to create an account.';
+      let errorMessage = "Failed to create an account.";
       switch (error.code) {
-        case 'auth/email-already-in-use':
-          errorMessage = 'Email already in use. Please use a different email.';
+        case "auth/email-already-in-use":
+          errorMessage = "Email already in use. Please use a different email.";
           break;
-        case 'auth/invalid-email':
-          errorMessage = 'Invalid email address.';
+        case "auth/invalid-email":
+          errorMessage = "Invalid email address.";
           break;
-        case 'auth/weak-password':
-          errorMessage = 'Password is too weak. Please use a stronger password.';
+        case "auth/weak-password":
+          errorMessage =
+            "Password is too weak. Please use a stronger password.";
           break;
         default:
-          errorMessage = 'An unexpected error occurred. Please try again.';
+          errorMessage = "An unexpected error occurred. Please try again.";
           break;
       }
       setError(errorMessage);
@@ -52,11 +59,11 @@ const handleSignup = async (e) => {
   const handleGoogleSignup = async () => {
     try {
       const result = await signInWithRedirect(auth, googleProvider);
-      console.log("res:",result);
+      console.log("res:", result);
       login(result.user);
-      navigate('/store');
+      navigate("/store");
     } catch (error) {
-      setError('Google sign-up failed.');
+      setError("Google sign-up failed.");
     }
   };
 
@@ -64,16 +71,15 @@ const handleSignup = async (e) => {
     try {
       const result = await signInWithPopup(auth, appleProvider);
       login(result.user);
-      navigate('/store');
+      navigate("/store");
     } catch (error) {
-      setError('Apple sign-up failed.');
+      setError("Apple sign-up failed.");
     }
   };
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword)
-  }
-
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className="signup-container flex h-screen text-center">
@@ -83,62 +89,46 @@ const handleSignup = async (e) => {
           <h2 className="text-4xl font-bold text-center">
             Furni<span className="text-blue-400">Flex</span>
           </h2>
-          <p className="mb-6 text-center text-gray-500 font-medium">Signup for purchase your desired products</p>
+          <p className="mb-6 text-center text-gray-500 font-medium">
+            Signup for purchase your desired products
+          </p>
           {error && <p className="text-red-500 mb-4">{error}</p>}
           <form onSubmit={handleSignup}>
-            {/* <div className="mb-4 flex space-x-4">
-              <input
-                type="text"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                placeholder="First name (optional)"
-                className="w-1/2 px-4 py-2 border rounded-md"
-              />
-              <input
-                type="text"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                placeholder="Last name (optional)"
-                className="w-1/2 px-4 py-2 border rounded-md"
-              />
-            </div> */}
-
             <div className="mb-4 flex space-x-4">
-  {/* First Name Field */}
-  <div className="relative w-1/2">
-    <label className="input-label z-50 pt-1 text-xs absolute top-0 left-2.5 block font-medium mb-1">
-      First Name (Optional)
-    </label>
-    <div className="relative flex">
-      <input
-        type="text"
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
-        placeholder="First name (optional)"
-        className="w-full pl-2.5 text-sm pb-1 border rounded-md text-black"
-        style={{ paddingTop: "20px" }}
-      />
-    </div>
-  </div>
+              {/* First Name Field */}
+              <div className="relative w-1/2">
+                <label className="input-label z-50 pt-1 text-xs absolute top-0 left-2.5 block font-medium mb-1">
+                  First Name (Optional)
+                </label>
+                <div className="relative flex">
+                  <input
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    placeholder="First name (optional)"
+                    className="w-full pl-2.5 text-sm pb-1 border rounded-md text-black"
+                    style={{ paddingTop: "20px" }}
+                  />
+                </div>
+              </div>
 
-  {/* Last Name Field */}
-  <div className="relative w-1/2">
-    <label className="input-label z-50 pt-1 text-xs absolute top-0 left-2.5 block font-medium mb-1">
-      Last Name (Optional)
-    </label>
-    <div className="relative flex">
-      <input
-        type="text"
-        value={lastName}
-        onChange={(e) => setLastName(e.target.value)}
-        placeholder="Last name (optional)"
-        className="w-full pl-2.5 text-sm pb-1 border rounded-md text-black"
-        style={{ paddingTop: "20px" }}
-      />
-    </div>
-  </div>
-</div>
-
+              {/* Last Name Field */}
+              <div className="relative w-1/2">
+                <label className="input-label z-50 pt-1 text-xs absolute top-0 left-2.5 block font-medium mb-1">
+                  Last Name (Optional)
+                </label>
+                <div className="relative flex">
+                  <input
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    placeholder="Last name (optional)"
+                    className="w-full pl-2.5 text-sm pb-1 border rounded-md text-black"
+                    style={{ paddingTop: "20px" }}
+                  />
+                </div>
+              </div>
+            </div>
 
             <div className="mb-4 relative">
               <label className="input-label z-50 pt-1 text-xs absolute top-0 left-2.5 block font-medium mb-1">
@@ -185,7 +175,10 @@ const handleSignup = async (e) => {
             <div className="mb-4 flex items-center">
               <input type="checkbox" id="terms" className="mr-2" required />
               <label htmlFor="terms" className="font-medium">
-                I agree to the <Link to="/terms" className="underline underline-offset-1">Terms & Policy</Link>
+                I agree to the{" "}
+                <Link to="/terms" className="underline underline-offset-1">
+                  Terms & Policy
+                </Link>
               </label>
             </div>
             <button
@@ -213,9 +206,17 @@ const handleSignup = async (e) => {
             </button>
           </div>
           <div className="mt-6 text-center">
-            <p className="text-sm font-medium">Already have an account? <Link to="/login"        style={{
+            <p className="text-sm font-medium">
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                style={{
                   color: "#0f3dde",
-                }}>Sign In</Link></p>
+                }}
+              >
+                Sign In
+              </Link>
+            </p>
           </div>
         </div>
       </div>
